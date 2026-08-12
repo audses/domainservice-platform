@@ -25,10 +25,10 @@
     <PackageReference Include="Appfoundation.Orchestrator.Abstraction" Version="[1.2.0, 2.0.0)" />
     <PackageReference Include="Appfoundation.Security" Version="[1.1.11, 1.2.0)" />
     <PackageReference Include="Appfoundation.Storage.FileSystem" Version="[1.6.3, 2.0.0)" />
-    <PackageReference Include="Domaincontext.Platform" Version="[1.0.79, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Product" Version="[1.0.71, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Role" Version="[1.0.67, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Tenant" Version="[1.0.78, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform" Version="[1.0.80, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Product" Version="[1.0.72, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Role" Version="[1.0.68, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Tenant" Version="[1.0.79, 1.1.0)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[10.0.10, 10.1.0)" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +37,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Domaincontext.Platform.ConfigurationEntry" Version="[1.0.60, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.ConfigurationEntry" Version="[1.0.61, 1.1.0)" />
   </ItemGroup>
 </Project>
