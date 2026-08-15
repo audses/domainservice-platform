@@ -6,6 +6,7 @@
 #nullable enable
 
 namespace Workflowgroup.Platform;
+
 /// <summary>The platform's seed role dictionary — administrator/user by default, extensible via platform/roles/*.json.</summary>
 public static class RoleDictionary
 {

@@ -12,6 +12,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Resolvers;
+
 internal sealed class TenantCreateResolverStep1 : IEntityIdentifierResolver<TenantCreateCommand>
 {
     private readonly IUniqueRegistry _uniqueRegistry;

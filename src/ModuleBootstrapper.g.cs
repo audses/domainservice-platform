@@ -16,6 +16,7 @@ using Workflowgroup.Platform.Workflow;
 using Workflowgroup.Platform.Workflow.Resolvers;
 
 namespace Workflowgroup.Platform;
+
 /// <summary>Mechanical DI registrations for the platform workflow group — regenerated whenever the group's workflows change.</summary>
 public static partial class ModuleBootstrapper
 {

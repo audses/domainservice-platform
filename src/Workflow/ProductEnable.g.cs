@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Enables the specified product.</summary>
 [Command("product-enable")]
 public sealed record ProductEnableCommand(Guid ProductId);

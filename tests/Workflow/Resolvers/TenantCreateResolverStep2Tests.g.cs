@@ -13,6 +13,7 @@ using NSubstitute;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Resolvers.Tests;
+
 public sealed class TenantCreateResolverStep2Tests
 {
     [Fact]

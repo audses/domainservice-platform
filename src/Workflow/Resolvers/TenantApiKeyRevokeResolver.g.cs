@@ -12,6 +12,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Resolvers;
+
 using Domaincontext.Platform;
 
 internal sealed class TenantApiKeyRevokeResolver : IEntityIdentifierResolver<TenantApiKeyRevokeCommand>

@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Disables the specified tenant.</summary>
 [Command("tenant-disable")]
 public sealed record TenantDisableCommand(Guid TenantId, string? Reason);

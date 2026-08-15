@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Disables the specified product.</summary>
 [Command("product-disable")]
 public sealed record ProductDisableCommand(Guid ProductId, string? Reason);

@@ -1,0 +1,60 @@
+root = true
+
+# BEGIN app-builder-generated: dotnet-editorconfig
+
+[*.cs]
+
+# ── Nullable reference type enforcement ───────────────────────────────────────
+dotnet_diagnostic.CS8600.severity = error   # Converting null literal or possible null value
+dotnet_diagnostic.CS8602.severity = error   # Dereference of possibly null reference
+dotnet_diagnostic.CS8603.severity = error   # Possible null reference return
+dotnet_diagnostic.CS8604.severity = error   # Possible null reference argument
+dotnet_diagnostic.CS8618.severity = error   # Non-nullable field uninitialized in constructor
+dotnet_diagnostic.CS8625.severity = error   # Cannot convert null literal to non-nullable type
+
+# ── Explicit interface implementation ─────────────────────────────────────────
+# Convention: interface members MUST be implemented explicitly (not as public methods).
+# CA1033 is suppressed so explicit implementations are not flagged by the analyzer;
+# CA2119 prevents exposing private-interface implementations via public overrides.
+dotnet_diagnostic.CA1033.severity = none    # Allow explicit interface implementations freely
+dotnet_diagnostic.CA2119.severity = error   # Seal methods satisfying private interfaces
+
+# ── Design rules ──────────────────────────────────────────────────────────────
+dotnet_diagnostic.CA1000.severity = warning     # Do not declare static members on generic types
+dotnet_diagnostic.CA1040.severity = suggestion  # Avoid empty interfaces
+dotnet_diagnostic.CA1051.severity = warning     # Do not declare visible instance fields
+dotnet_diagnostic.CA1716.severity = none        # Identifiers matching keywords (suppressed – common in DDD)
+dotnet_diagnostic.CA1721.severity = none        # GetXY methods should not be properties (suppressed – common in DDD)
+dotnet_diagnostic.CA1819.severity = warning     # Properties should not return arrays
+dotnet_diagnostic.CA1062.severity = warning     # Validate public method arguments
+
+# ── Reliability ───────────────────────────────────────────────────────────────
+dotnet_diagnostic.CA1816.severity = warning  # Dispose should call SuppressFinalize
+dotnet_diagnostic.CA2000.severity = warning  # Dispose objects before losing scope
+dotnet_diagnostic.CA2007.severity = warning  # Use ConfigureAwait on awaited tasks
+dotnet_diagnostic.CA2016.severity = warning  # Forward CancellationToken to methods
+
+# ── Performance ───────────────────────────────────────────────────────────────
+dotnet_diagnostic.CA1822.severity = warning    # Mark members as static when possible
+dotnet_diagnostic.CA1848.severity = suggestion # Use LoggerMessage delegates for hot paths
+dotnet_diagnostic.CA1860.severity = suggestion # Prefer IsEmpty over Count == 0
+
+# ── Code style (IDE rules) ────────────────────────────────────────────────────
+dotnet_diagnostic.IDE0055.severity = warning  # Fix formatting
+dotnet_diagnostic.IDE0005.severity = warning  # Remove unnecessary usings
+dotnet_diagnostic.IDE0060.severity = warning  # Remove unused parameters
+
+# ── XML documentation ─────────────────────────────────────────────────────────
+dotnet_diagnostic.CS1591.severity = warning  # Missing XML comment for publicly visible type or member
+
+[{tests,*Tests,*Test}/**/*.cs]
+
+# Test projects use AnalysisMode=Recommended and do not generate XML docs.
+# Suppress rules that are irrelevant or noisy in a test context.
+dotnet_diagnostic.CS1591.severity = none    # No XML doc requirement for test code
+dotnet_diagnostic.CA1707.severity = none    # Allow underscores in test method names
+dotnet_diagnostic.CA2007.severity = none    # ConfigureAwait not required in tests
+dotnet_diagnostic.CA1062.severity = none    # No argument validation needed in tests
+dotnet_diagnostic.CA1822.severity = none    # Test methods cannot always be static
+
+# END app-builder-generated: dotnet-editorconfig

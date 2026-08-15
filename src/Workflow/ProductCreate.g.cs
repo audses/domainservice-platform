@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Creates a new product account.</summary>
 [Command("platform-product-create")]
 public sealed record ProductCreateCommand(string Name, string Key);

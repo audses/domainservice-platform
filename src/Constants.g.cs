@@ -6,6 +6,7 @@
 #nullable enable
 
 namespace Workflowgroup.Platform;
+
 /// <summary>Unique-registry key constants for the 'platform' workflow group.</summary>
 public static class Constants
 {

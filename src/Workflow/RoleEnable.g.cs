@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Enables the specified role.</summary>
 [Command("role-enable")]
 public sealed record RoleEnableCommand(Guid RoleId);

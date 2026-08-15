@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Disables the specified role.</summary>
 [Command("role-disable")]
 public sealed record RoleDisableCommand(Guid RoleId);

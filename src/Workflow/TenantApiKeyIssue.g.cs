@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Issues an API key for the specified tenant.</summary>
 [Command("tenant-api-key-issue")]
 public sealed record TenantApiKeyIssueCommand(Guid TenantId, string Name, string? Description, string RawApiKey, DateTimeOffset ExpiresAt);

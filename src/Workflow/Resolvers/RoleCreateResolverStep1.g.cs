@@ -12,6 +12,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Resolvers;
+
 internal sealed class RoleCreateResolverStep1 : IEntityIdentifierResolver<RoleCreateCommand>
 {
     private readonly IUniqueRegistry _uniqueRegistry;

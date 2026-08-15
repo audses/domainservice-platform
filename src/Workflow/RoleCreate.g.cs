@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Creates a new role.</summary>
 [Command("role-create")]
 public sealed record RoleCreateCommand(string Name, string Key);

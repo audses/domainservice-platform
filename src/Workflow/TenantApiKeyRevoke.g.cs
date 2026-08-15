@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Revokes the specified API key for the given tenant.</summary>
 [Command("tenant-api-key-revoke")]
 public sealed record TenantApiKeyRevokeCommand(Guid TenantId, string KeyHash);

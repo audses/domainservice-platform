@@ -12,6 +12,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Resolvers;
+
 internal sealed class ConfigurationEntrySetResolverStep1 : IEntityIdentifierResolver<ConfigurationEntrySetCommand>
 {
     private readonly IUniqueRegistry _uniqueRegistry;

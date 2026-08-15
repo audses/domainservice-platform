@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Deletes the specified tenant.</summary>
 [Command("platform-tenant-delete")]
 public sealed record TenantDeleteCommand(Guid TenantId);

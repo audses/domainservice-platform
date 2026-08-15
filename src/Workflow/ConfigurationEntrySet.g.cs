@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Creates a configuration entry for the given key.</summary>
 [Command("configuration-entry-set")]
 public sealed record ConfigurationEntrySetCommand(string Key, string SchemaKey, string PropertyKey, string ScopeKind, string? ScopeId, string Value);

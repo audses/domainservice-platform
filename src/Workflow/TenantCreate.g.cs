@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Creates a new tenant account.</summary>
 [Command("platform-create")]
 public sealed record TenantCreateCommand(string Name, string Key);

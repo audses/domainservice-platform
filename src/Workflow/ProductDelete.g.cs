@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Deletes the specified product.</summary>
 [Command("platform-product-delete")]
 public sealed record ProductDeleteCommand(Guid ProductId);

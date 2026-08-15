@@ -14,6 +14,7 @@ using Appfoundation.Orchestrator.Abstraction.Core;
 using Domaincontext.Platform;
 
 namespace Workflowgroup.Platform.Workflow;
+
 /// <summary>Enables the specified tenant.</summary>
 [Command("tenant-enable")]
 public sealed record TenantEnableCommand(Guid TenantId);

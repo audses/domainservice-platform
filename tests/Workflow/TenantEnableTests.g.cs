@@ -15,6 +15,7 @@ using NSubstitute;
 using Workflowgroup.Platform.Workflow;
 
 namespace Workflowgroup.Platform.Workflow.Tests;
+
 public sealed class TenantEnableWorkflowTests
 {
     [Fact]
