@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-product-create")]
 public sealed record ProductCreateCommand(string Name, string Key);
 /// <summary>Workflow implementing the 'product-create' process.</summary>
-[OrchestratorWorkflow("platform.product-create", Name = "ProductCreate Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.product-create", Name = "ProductCreate Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ProductCreateWorkflow
 {
     /// <summary>Creates a new product account.</summary>

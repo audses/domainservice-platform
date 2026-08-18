@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("tenant-api-key-issue")]
 public sealed record TenantApiKeyIssueCommand(Guid TenantId, string Name, string? Description, string RawApiKey, DateTimeOffset ExpiresAt);
 /// <summary>Workflow implementing the 'tenant-api-key-issue' process.</summary>
-[OrchestratorWorkflow("platform.tenant-api-key-issue", Name = "TenantApiKeyIssue Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.tenant-api-key-issue", Name = "TenantApiKeyIssue Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantApiKeyIssueWorkflow
 {
     /// <summary>Issues an API key for the specified tenant.</summary>

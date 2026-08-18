@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("role-create")]
 public sealed record RoleCreateCommand(string Name, string Key);
 /// <summary>Workflow implementing the 'role-create' process.</summary>
-[OrchestratorWorkflow("platform.role-create", Name = "RoleCreate Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.role-create", Name = "RoleCreate Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class RoleCreateWorkflow
 {
     private readonly IUniqueRegistry _uniqueRegistry;

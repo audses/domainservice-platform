@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("product-disable")]
 public sealed record ProductDisableCommand(Guid ProductId, string? Reason);
 /// <summary>Workflow implementing the 'product-disable' process.</summary>
-[OrchestratorWorkflow("platform.product-disable", Name = "ProductDisable Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.product-disable", Name = "ProductDisable Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ProductDisableWorkflow
 {
     /// <summary>Disables the specified product.</summary>

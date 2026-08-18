@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("tenant-disable")]
 public sealed record TenantDisableCommand(Guid TenantId, string? Reason);
 /// <summary>Workflow implementing the 'tenant-disable' process.</summary>
-[OrchestratorWorkflow("platform.tenant-disable", Name = "TenantDisable Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.tenant-disable", Name = "TenantDisable Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantDisableWorkflow
 {
     /// <summary>Disables the specified tenant.</summary>

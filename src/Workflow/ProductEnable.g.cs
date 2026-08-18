@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("product-enable")]
 public sealed record ProductEnableCommand(Guid ProductId);
 /// <summary>Workflow implementing the 'product-enable' process.</summary>
-[OrchestratorWorkflow("platform.product-enable", Name = "ProductEnable Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.product-enable", Name = "ProductEnable Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ProductEnableWorkflow
 {
     /// <summary>Enables the specified product.</summary>

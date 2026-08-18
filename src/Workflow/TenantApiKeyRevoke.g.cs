@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("tenant-api-key-revoke")]
 public sealed record TenantApiKeyRevokeCommand(Guid TenantId, string KeyHash);
 /// <summary>Workflow implementing the 'tenant-api-key-revoke' process.</summary>
-[OrchestratorWorkflow("platform.tenant-api-key-revoke", Name = "TenantApiKeyRevoke Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.tenant-api-key-revoke", Name = "TenantApiKeyRevoke Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantApiKeyRevokeWorkflow
 {
     /// <summary>Revokes the specified API key for the given tenant.</summary>

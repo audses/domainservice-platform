@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-product-delete")]
 public sealed record ProductDeleteCommand(Guid ProductId);
 /// <summary>Workflow implementing the 'product-delete' process.</summary>
-[OrchestratorWorkflow("platform.product-delete", Name = "ProductDelete Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.product-delete", Name = "ProductDelete Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ProductDeleteWorkflow
 {
     /// <summary>Deletes the specified product.</summary>

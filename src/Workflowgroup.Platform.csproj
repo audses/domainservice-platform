@@ -20,14 +20,14 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Appfoundation.Contract.Integration" Version="[1.1.46, 1.2.0)" />
+    <PackageReference Include="Appfoundation.Contract.Integration" Version="[1.1.47, 1.2.0)" />
     <PackageReference Include="Appfoundation.Orchestrator.Abstraction" Version="[1.1.29, 1.2.0)" />
     <PackageReference Include="Appfoundation.Security" Version="[1.1.12, 1.2.0)" />
     <PackageReference Include="Appfoundation.Storage.FileSystem" Version="[1.0.1, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform" Version="[1.0.117, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Product" Version="[1.0.107, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Role" Version="[1.0.103, 1.1.0)" />
-    <PackageReference Include="Domaincontext.Platform.Tenant" Version="[1.0.114, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform" Version="[1.0.157, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Product" Version="[1.0.147, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Role" Version="[1.0.143, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.Tenant" Version="[1.0.154, 1.1.0)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[10.0.11, 10.1.0)" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +36,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Domaincontext.Platform.ConfigurationEntry" Version="[1.0.96, 1.1.0)" />
+    <PackageReference Include="Domaincontext.Platform.ConfigurationEntry" Version="[1.0.136, 1.1.0)" />
   </ItemGroup>
 </Project>

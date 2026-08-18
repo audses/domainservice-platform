@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("configuration-entry-set")]
 public sealed record ConfigurationEntrySetCommand(string Key, string SchemaKey, string PropertyKey, string ScopeKind, string? ScopeId, string Value);
 /// <summary>Workflow implementing the 'configuration-entry-set' process.</summary>
-[OrchestratorWorkflow("platform.configuration-entry-set", Name = "ConfigurationEntrySet Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.configuration-entry-set", Name = "ConfigurationEntrySet Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ConfigurationEntrySetWorkflow
 {
     /// <summary>Creates a configuration entry for the given key.</summary>

@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-create")]
 public sealed record TenantCreateCommand(string Name, string Key);
 /// <summary>Workflow implementing the 'tenant-create' process.</summary>
-[OrchestratorWorkflow("platform.tenant-create", Name = "TenantCreate Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.tenant-create", Name = "TenantCreate Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantCreateWorkflow
 {
     /// <summary>Creates a new tenant account.</summary>

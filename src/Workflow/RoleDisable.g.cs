@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("role-disable")]
 public sealed record RoleDisableCommand(Guid RoleId);
 /// <summary>Workflow implementing the 'role-disable' process.</summary>
-[OrchestratorWorkflow("platform.role-disable", Name = "RoleDisable Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.role-disable", Name = "RoleDisable Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class RoleDisableWorkflow
 {
     /// <summary>Disables the specified role.</summary>

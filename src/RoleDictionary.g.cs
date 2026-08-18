@@ -11,5 +11,5 @@ namespace Workflowgroup.Platform;
 public static class RoleDictionary
 {
     /// <summary>Every role dictionary entry (platform/roles/*.json), in file order.</summary>
-    public static readonly (string Key, string Name)[] Entries = [("administrator", "Administrator"), ("user", "User")];
+    public static readonly (string Key, string Name)[] Entries = [("administrator", "Administrator"), ("system", "System"), ("user", "User")];
 }

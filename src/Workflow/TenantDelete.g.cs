@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-tenant-delete")]
 public sealed record TenantDeleteCommand(Guid TenantId);
 /// <summary>Workflow implementing the 'tenant-delete' process.</summary>
-[OrchestratorWorkflow("platform.tenant-delete", Name = "TenantDelete Workflow", Roles = new[] { "Administrator" })]
+[OrchestratorWorkflow("platform.tenant-delete", Name = "TenantDelete Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantDeleteWorkflow
 {
     /// <summary>Deletes the specified tenant.</summary>
