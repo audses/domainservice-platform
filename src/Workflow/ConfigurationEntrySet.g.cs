@@ -22,6 +22,13 @@ public sealed record ConfigurationEntrySetCommand(string Key, string SchemaKey, 
 [OrchestratorWorkflow("platform.configuration-entry-set", Name = "ConfigurationEntrySet Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ConfigurationEntrySetWorkflow
 {
+    private readonly IUniqueRegistry _uniqueRegistry;
+    /// <summary>Initializes a new instance of the ConfigurationEntrySetWorkflow class.</summary>
+    public ConfigurationEntrySetWorkflow(IUniqueRegistry uniqueRegistry)
+    {
+        _uniqueRegistry = uniqueRegistry ?? throw new ArgumentNullException(nameof(uniqueRegistry));
+    }
+
     /// <summary>Creates a configuration entry for the given key.</summary>
     [OnStart]
     public async Task ConfigurationEntrySet(IPlatformConfigurationEntry proxy, WorkflowContext<ConfigurationEntrySetCommand> ctx, CancellationToken cancellationToken)
@@ -29,4 +36,28 @@ public partial class ConfigurationEntrySetWorkflow
         var request = new ConfigurationEntrySetRequest(new ConfigurationEntryKey(ctx.Request.Key), new ConfigurationSchemaKey(ctx.Request.SchemaKey), new ConfigurationPropertyKey(ctx.Request.PropertyKey), new ConfigurationScopeKind(ctx.Request.ScopeKind), ctx.Request.ScopeId, new ConfigurationValue(ctx.Request.Value));
         await proxy.ConfigurationEntrySet(request, cancellationToken).ConfigureAwait(false);
     }
+
+    /// <summary>Confirms the reserved configuration-entry key in the unique registry once the entry is created.</summary>
+    [WhenEvent]
+    public async Task OnConfigurationEntrySet(Domaincontext.Platform.ConfigurationEntrySet payload, EventContext eventContext, WorkflowContext context, CancellationToken cancellationToken)
+    {
+        await _uniqueRegistry.Confirm(eventContext.EntityId, new UniqueRegistryKey(Constants.ConfigurationEntryKeyUniqueKey, payload.Key.Value), cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <summary>Uniform entry point for starting the 'configuration-entry-set' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IConfigurationEntrySetInvoker : IWorkflowInvoker<ConfigurationEntrySetCommand>
+{
+}
+
+/// <summary>In-process IConfigurationEntrySetInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class ConfigurationEntrySetLocalInvoker : IConfigurationEntrySetInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public ConfigurationEntrySetLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<ConfigurationEntrySetCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<ConfigurationEntrySetWorkflow, ConfigurationEntrySetCommand>(context, cancellationToken);
 }

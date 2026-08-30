@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Enables the specified role.</summary>
-[Command("role-enable")]
+[Command("platform-role-enable")]
 public sealed record RoleEnableCommand(Guid RoleId);
 /// <summary>Workflow implementing the 'role-enable' process.</summary>
 [OrchestratorWorkflow("platform.role-enable", Name = "RoleEnable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -28,4 +28,21 @@ public partial class RoleEnableWorkflow
     {
         await proxy.RoleEnable(cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'role-enable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IRoleEnableInvoker : IWorkflowInvoker<RoleEnableCommand>
+{
+}
+
+/// <summary>In-process IRoleEnableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class RoleEnableLocalInvoker : IRoleEnableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public RoleEnableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<RoleEnableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<RoleEnableWorkflow, RoleEnableCommand>(context, cancellationToken);
 }

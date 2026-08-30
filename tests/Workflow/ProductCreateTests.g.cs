@@ -21,8 +21,9 @@ public sealed class ProductCreateWorkflowTests
     [Fact]
     public async Task ProductCreate_InvokesEntityProxyCommand()
     {
+        var uniqueRegistry = Substitute.For<IUniqueRegistry>();
         var proxy = Substitute.For<IPlatformProduct>();
-        var sut = new ProductCreateWorkflow();
+        var sut = new ProductCreateWorkflow(uniqueRegistry);
         var ctx = new WorkflowContext<ProductCreateCommand>(new ProductCreateCommand("sample-1", "sample-2"), TenantIdentifier.Empty, UserIdentifier.Empty, CorrelationIdentifier.Empty, ProductIdentifier.Empty, CommandIdentifier.Empty);
         try
         {

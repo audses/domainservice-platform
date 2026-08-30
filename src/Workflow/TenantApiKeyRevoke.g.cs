@@ -30,3 +30,20 @@ public partial class TenantApiKeyRevokeWorkflow
         await proxy.RevokeApiKey(request, cancellationToken).ConfigureAwait(false);
     }
 }
+
+/// <summary>Uniform entry point for starting the 'tenant-api-key-revoke' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantApiKeyRevokeInvoker : IWorkflowInvoker<TenantApiKeyRevokeCommand>
+{
+}
+
+/// <summary>In-process ITenantApiKeyRevokeInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantApiKeyRevokeLocalInvoker : ITenantApiKeyRevokeInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantApiKeyRevokeLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantApiKeyRevokeCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantApiKeyRevokeWorkflow, TenantApiKeyRevokeCommand>(context, cancellationToken);
+}

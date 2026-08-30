@@ -21,8 +21,9 @@ public sealed class TenantCreateWorkflowTests
     [Fact]
     public async Task Create_InvokesEntityProxyCommand()
     {
+        var uniqueRegistry = Substitute.For<IUniqueRegistry>();
         var proxy = Substitute.For<IPlatformTenant>();
-        var sut = new TenantCreateWorkflow();
+        var sut = new TenantCreateWorkflow(uniqueRegistry);
         var ctx = new WorkflowContext<TenantCreateCommand>(new TenantCreateCommand("sample-1", "sample-2"), TenantIdentifier.Empty, UserIdentifier.Empty, CorrelationIdentifier.Empty, ProductIdentifier.Empty, CommandIdentifier.Empty);
         try
         {

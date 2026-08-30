@@ -32,3 +32,20 @@ public partial class TenantApiKeyIssueWorkflow
 
     private partial Task<ApiKeyHash> ProvideKeyHash(WorkflowContext<TenantApiKeyIssueCommand> ctx, CancellationToken cancellationToken);
 }
+
+/// <summary>Uniform entry point for starting the 'tenant-api-key-issue' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantApiKeyIssueInvoker : IWorkflowInvoker<TenantApiKeyIssueCommand>
+{
+}
+
+/// <summary>In-process ITenantApiKeyIssueInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantApiKeyIssueLocalInvoker : ITenantApiKeyIssueInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantApiKeyIssueLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantApiKeyIssueCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantApiKeyIssueWorkflow, TenantApiKeyIssueCommand>(context, cancellationToken);
+}

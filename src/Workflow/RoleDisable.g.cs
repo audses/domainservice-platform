@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Disables the specified role.</summary>
-[Command("role-disable")]
+[Command("platform-role-disable")]
 public sealed record RoleDisableCommand(Guid RoleId);
 /// <summary>Workflow implementing the 'role-disable' process.</summary>
 [OrchestratorWorkflow("platform.role-disable", Name = "RoleDisable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -28,4 +28,21 @@ public partial class RoleDisableWorkflow
     {
         await proxy.RoleDisable(cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'role-disable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IRoleDisableInvoker : IWorkflowInvoker<RoleDisableCommand>
+{
+}
+
+/// <summary>In-process IRoleDisableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class RoleDisableLocalInvoker : IRoleDisableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public RoleDisableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<RoleDisableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<RoleDisableWorkflow, RoleDisableCommand>(context, cancellationToken);
 }

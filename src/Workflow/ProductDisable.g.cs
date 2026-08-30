@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Disables the specified product.</summary>
-[Command("product-disable")]
+[Command("platform-product-disable")]
 public sealed record ProductDisableCommand(Guid ProductId, string? Reason);
 /// <summary>Workflow implementing the 'product-disable' process.</summary>
 [OrchestratorWorkflow("platform.product-disable", Name = "ProductDisable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -29,4 +29,21 @@ public partial class ProductDisableWorkflow
         var request = new ProductDisableRequest(ctx.Request.Reason is null ? null : new ProductDisableReason(ctx.Request.Reason));
         await proxy.ProductDisable(request, cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'product-disable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IProductDisableInvoker : IWorkflowInvoker<ProductDisableCommand>
+{
+}
+
+/// <summary>In-process IProductDisableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class ProductDisableLocalInvoker : IProductDisableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public ProductDisableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<ProductDisableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<ProductDisableWorkflow, ProductDisableCommand>(context, cancellationToken);
 }

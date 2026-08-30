@@ -22,6 +22,13 @@ public sealed record ProductCreateCommand(string Name, string Key);
 [OrchestratorWorkflow("platform.product-create", Name = "ProductCreate Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class ProductCreateWorkflow
 {
+    private readonly IUniqueRegistry _uniqueRegistry;
+    /// <summary>Initializes a new instance of the ProductCreateWorkflow class.</summary>
+    public ProductCreateWorkflow(IUniqueRegistry uniqueRegistry)
+    {
+        _uniqueRegistry = uniqueRegistry ?? throw new ArgumentNullException(nameof(uniqueRegistry));
+    }
+
     /// <summary>Creates a new product account.</summary>
     [OnStart]
     public async Task ProductCreate(IPlatformProduct proxy, WorkflowContext<ProductCreateCommand> ctx, CancellationToken cancellationToken)
@@ -29,4 +36,28 @@ public partial class ProductCreateWorkflow
         var request = new ProductCreateRequest(new Domaincontext.Platform.ProductName(ctx.Request.Name), new Domaincontext.Platform.ProductKey(ctx.Request.Key));
         await proxy.ProductCreate(request, cancellationToken).ConfigureAwait(false);
     }
+
+    /// <summary>Confirms the reserved product key in the unique registry once the product is created.</summary>
+    [WhenEvent]
+    public async Task OnProductCreated(Domaincontext.Platform.ProductCreated payload, EventContext eventContext, WorkflowContext context, CancellationToken cancellationToken)
+    {
+        await _uniqueRegistry.Confirm(eventContext.EntityId, new UniqueRegistryKey(Constants.ProductKeyUniqueKey, payload.Key.Value), cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <summary>Uniform entry point for starting the 'product-create' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IProductCreateInvoker : IWorkflowInvoker<ProductCreateCommand>
+{
+}
+
+/// <summary>In-process IProductCreateInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class ProductCreateLocalInvoker : IProductCreateInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public ProductCreateLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<ProductCreateCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<ProductCreateWorkflow, ProductCreateCommand>(context, cancellationToken);
 }

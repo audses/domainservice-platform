@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Creates a new role.</summary>
-[Command("role-create")]
+[Command("platform-role-create")]
 public sealed record RoleCreateCommand(string Name, string Key);
 /// <summary>Workflow implementing the 'role-create' process.</summary>
 [OrchestratorWorkflow("platform.role-create", Name = "RoleCreate Workflow", Roles = new[] { "Administrator", "System" })]
@@ -43,4 +43,21 @@ public partial class RoleCreateWorkflow
     {
         await _uniqueRegistry.Confirm(eventContext.EntityId, new UniqueRegistryKey(Constants.RoleKeyUniqueKey, payload.Key.Value), cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'role-create' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IRoleCreateInvoker : IWorkflowInvoker<RoleCreateCommand>
+{
+}
+
+/// <summary>In-process IRoleCreateInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class RoleCreateLocalInvoker : IRoleCreateInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public RoleCreateLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<RoleCreateCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<RoleCreateWorkflow, RoleCreateCommand>(context, cancellationToken);
 }

@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Disables the specified tenant.</summary>
-[Command("tenant-disable")]
+[Command("platform-disable")]
 public sealed record TenantDisableCommand(Guid TenantId, string? Reason);
 /// <summary>Workflow implementing the 'tenant-disable' process.</summary>
 [OrchestratorWorkflow("platform.tenant-disable", Name = "TenantDisable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -29,4 +29,21 @@ public partial class TenantDisableWorkflow
         var request = new DisableRequest(ctx.Request.Reason is null ? null : new TenantDisableReason(ctx.Request.Reason));
         await proxy.Disable(request, cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'tenant-disable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantDisableInvoker : IWorkflowInvoker<TenantDisableCommand>
+{
+}
+
+/// <summary>In-process ITenantDisableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantDisableLocalInvoker : ITenantDisableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantDisableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantDisableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantDisableWorkflow, TenantDisableCommand>(context, cancellationToken);
 }

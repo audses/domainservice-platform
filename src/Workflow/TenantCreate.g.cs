@@ -22,6 +22,13 @@ public sealed record TenantCreateCommand(string Name, string Key);
 [OrchestratorWorkflow("platform.tenant-create", Name = "TenantCreate Workflow", Roles = new[] { "Administrator", "System" })]
 public partial class TenantCreateWorkflow
 {
+    private readonly IUniqueRegistry _uniqueRegistry;
+    /// <summary>Initializes a new instance of the TenantCreateWorkflow class.</summary>
+    public TenantCreateWorkflow(IUniqueRegistry uniqueRegistry)
+    {
+        _uniqueRegistry = uniqueRegistry ?? throw new ArgumentNullException(nameof(uniqueRegistry));
+    }
+
     /// <summary>Creates a new tenant account.</summary>
     [OnStart]
     public async Task Create(IPlatformTenant proxy, WorkflowContext<TenantCreateCommand> ctx, CancellationToken cancellationToken)
@@ -29,4 +36,28 @@ public partial class TenantCreateWorkflow
         var request = new CreateRequest(new Domaincontext.Platform.TenantName(ctx.Request.Name), new Domaincontext.Platform.TenantKey(ctx.Request.Key));
         await proxy.Create(request, cancellationToken).ConfigureAwait(false);
     }
+
+    /// <summary>Confirms the reserved tenant key in the unique registry once the tenant is created.</summary>
+    [WhenEvent]
+    public async Task OnTenantCreated(Domaincontext.Platform.TenantCreated payload, EventContext eventContext, WorkflowContext context, CancellationToken cancellationToken)
+    {
+        await _uniqueRegistry.Confirm(eventContext.EntityId, new UniqueRegistryKey(Constants.TenantKeyUniqueKey, payload.Key.Value), cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <summary>Uniform entry point for starting the 'tenant-create' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantCreateInvoker : IWorkflowInvoker<TenantCreateCommand>
+{
+}
+
+/// <summary>In-process ITenantCreateInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantCreateLocalInvoker : ITenantCreateInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantCreateLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantCreateCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantCreateWorkflow, TenantCreateCommand>(context, cancellationToken);
 }

@@ -29,3 +29,20 @@ public partial class TenantDeleteWorkflow
         await proxy.TenantDelete(cancellationToken).ConfigureAwait(false);
     }
 }
+
+/// <summary>Uniform entry point for starting the 'tenant-delete' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantDeleteInvoker : IWorkflowInvoker<TenantDeleteCommand>
+{
+}
+
+/// <summary>In-process ITenantDeleteInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantDeleteLocalInvoker : ITenantDeleteInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantDeleteLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantDeleteCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantDeleteWorkflow, TenantDeleteCommand>(context, cancellationToken);
+}

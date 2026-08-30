@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Enables the specified product.</summary>
-[Command("product-enable")]
+[Command("platform-product-enable")]
 public sealed record ProductEnableCommand(Guid ProductId);
 /// <summary>Workflow implementing the 'product-enable' process.</summary>
 [OrchestratorWorkflow("platform.product-enable", Name = "ProductEnable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -28,4 +28,21 @@ public partial class ProductEnableWorkflow
     {
         await proxy.ProductEnable(cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'product-enable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IProductEnableInvoker : IWorkflowInvoker<ProductEnableCommand>
+{
+}
+
+/// <summary>In-process IProductEnableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class ProductEnableLocalInvoker : IProductEnableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public ProductEnableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<ProductEnableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<ProductEnableWorkflow, ProductEnableCommand>(context, cancellationToken);
 }

@@ -29,3 +29,20 @@ public partial class ProductDeleteWorkflow
         await proxy.ProductDelete(cancellationToken).ConfigureAwait(false);
     }
 }
+
+/// <summary>Uniform entry point for starting the 'product-delete' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface IProductDeleteInvoker : IWorkflowInvoker<ProductDeleteCommand>
+{
+}
+
+/// <summary>In-process IProductDeleteInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class ProductDeleteLocalInvoker : IProductDeleteInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public ProductDeleteLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<ProductDeleteCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<ProductDeleteWorkflow, ProductDeleteCommand>(context, cancellationToken);
+}

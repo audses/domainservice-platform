@@ -16,7 +16,7 @@ using Domaincontext.Platform;
 namespace Workflowgroup.Platform.Workflow;
 
 /// <summary>Enables the specified tenant.</summary>
-[Command("tenant-enable")]
+[Command("platform-enable")]
 public sealed record TenantEnableCommand(Guid TenantId);
 /// <summary>Workflow implementing the 'tenant-enable' process.</summary>
 [OrchestratorWorkflow("platform.tenant-enable", Name = "TenantEnable Workflow", Roles = new[] { "Administrator", "System" })]
@@ -28,4 +28,21 @@ public partial class TenantEnableWorkflow
     {
         await proxy.Enable(cancellationToken).ConfigureAwait(false);
     }
+}
+
+/// <summary>Uniform entry point for starting the 'tenant-enable' workflow, regardless of whether the caller and the workflow share an assembly.</summary>
+public interface ITenantEnableInvoker : IWorkflowInvoker<TenantEnableCommand>
+{
+}
+
+/// <summary>In-process ITenantEnableInvoker implementation, registered whenever this workflow group is hosted directly in the current assembly.</summary>
+internal sealed class TenantEnableLocalInvoker : ITenantEnableInvoker
+{
+    private readonly IOrchestrator _orchestrator;
+    public TenantEnableLocalInvoker(IOrchestrator orchestrator)
+    {
+        _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+    }
+
+    public Task InvokeAsync(WorkflowContext<TenantEnableCommand> context, CancellationToken cancellationToken) => _orchestrator.StartWorkflowAsync<TenantEnableWorkflow, TenantEnableCommand>(context, cancellationToken);
 }

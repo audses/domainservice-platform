@@ -46,6 +46,20 @@ public static partial class ModuleBootstrapper
         serviceCollection.AddProductEntity();
         serviceCollection.AddRoleEntity();
         serviceCollection.AddTenantEntity();
+        serviceCollection.AddScoped<IConfigurationEntrySetInvoker, ConfigurationEntrySetLocalInvoker>();
+        serviceCollection.AddScoped<IProductCreateInvoker, ProductCreateLocalInvoker>();
+        serviceCollection.AddScoped<IProductDeleteInvoker, ProductDeleteLocalInvoker>();
+        serviceCollection.AddScoped<IProductDisableInvoker, ProductDisableLocalInvoker>();
+        serviceCollection.AddScoped<IProductEnableInvoker, ProductEnableLocalInvoker>();
+        serviceCollection.AddScoped<IRoleCreateInvoker, RoleCreateLocalInvoker>();
+        serviceCollection.AddScoped<IRoleDisableInvoker, RoleDisableLocalInvoker>();
+        serviceCollection.AddScoped<IRoleEnableInvoker, RoleEnableLocalInvoker>();
+        serviceCollection.AddScoped<ITenantApiKeyIssueInvoker, TenantApiKeyIssueLocalInvoker>();
+        serviceCollection.AddScoped<ITenantApiKeyRevokeInvoker, TenantApiKeyRevokeLocalInvoker>();
+        serviceCollection.AddScoped<ITenantCreateInvoker, TenantCreateLocalInvoker>();
+        serviceCollection.AddScoped<ITenantDeleteInvoker, TenantDeleteLocalInvoker>();
+        serviceCollection.AddScoped<ITenantDisableInvoker, TenantDisableLocalInvoker>();
+        serviceCollection.AddScoped<ITenantEnableInvoker, TenantEnableLocalInvoker>();
         return serviceCollection;
     }
 }
