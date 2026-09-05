@@ -22,7 +22,7 @@ public static partial class ModuleBootstrapper
 {
     private static IServiceCollection AddPlatformWorkflowsGenerated(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddWorkflowCommandMappings().For<ConfigurationEntrySetWorkflow, ConfigurationEntrySetCommand>().For<ProductCreateWorkflow, ProductCreateCommand>().For<ProductDeleteWorkflow, ProductDeleteCommand>().For<ProductDisableWorkflow, ProductDisableCommand>().For<ProductEnableWorkflow, ProductEnableCommand>().For<RoleCreateWorkflow, RoleCreateCommand>().For<RoleDisableWorkflow, RoleDisableCommand>().For<RoleEnableWorkflow, RoleEnableCommand>().For<TenantApiKeyIssueWorkflow, TenantApiKeyIssueCommand>().For<TenantApiKeyRevokeWorkflow, TenantApiKeyRevokeCommand>().For<TenantCreateWorkflow, TenantCreateCommand>().For<TenantDeleteWorkflow, TenantDeleteCommand>().For<TenantDisableWorkflow, TenantDisableCommand>().For<TenantEnableWorkflow, TenantEnableCommand>();
+        serviceCollection.AddWorkflowCommandMappings().For<ConfigurationEntrySetWorkflow, ConfigurationEntrySetCommand>().For<ProductCreateWorkflow, ProductCreateCommand>().For<ProductDeleteWorkflow, ProductDeleteCommand>().For<ProductDisableWorkflow, ProductDisableCommand>().For<ProductEnableWorkflow, ProductEnableCommand>().For<ProductUpdateWorkflow, ProductUpdateCommand>().For<RoleCreateWorkflow, RoleCreateCommand>().For<RoleDisableWorkflow, RoleDisableCommand>().For<RoleEnableWorkflow, RoleEnableCommand>().For<RoleUpdateWorkflow, RoleUpdateCommand>().For<TenantApiKeyIssueWorkflow, TenantApiKeyIssueCommand>().For<TenantApiKeyRevokeWorkflow, TenantApiKeyRevokeCommand>().For<TenantCreateWorkflow, TenantCreateCommand>().For<TenantDeleteWorkflow, TenantDeleteCommand>().For<TenantDisableWorkflow, TenantDisableCommand>().For<TenantEnableWorkflow, TenantEnableCommand>().For<TenantUpdateWorkflow, TenantUpdateCommand>();
         serviceCollection.AddGeneratedWorkflows();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ConfigurationEntrySetCommand>, ConfigurationEntrySetResolverStep1>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ConfigurationEntrySetCommand>, ConfigurationEntrySetResolverStep2>();
@@ -31,10 +31,12 @@ public static partial class ModuleBootstrapper
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductDeleteCommand>, ProductDeleteResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductDisableCommand>, ProductDisableResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductEnableCommand>, ProductEnableResolver>();
+        serviceCollection.AddScoped<IEntityIdentifierResolver<ProductUpdateCommand>, ProductUpdateResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<RoleCreateCommand>, RoleCreateResolverStep1>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<RoleCreateCommand>, RoleCreateResolverStep2>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<RoleDisableCommand>, RoleDisableResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<RoleEnableCommand>, RoleEnableResolver>();
+        serviceCollection.AddScoped<IEntityIdentifierResolver<RoleUpdateCommand>, RoleUpdateResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantApiKeyIssueCommand>, TenantApiKeyIssueResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantApiKeyRevokeCommand>, TenantApiKeyRevokeResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantCreateCommand>, TenantCreateResolverStep1>();
@@ -42,6 +44,7 @@ public static partial class ModuleBootstrapper
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantDeleteCommand>, TenantDeleteResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantDisableCommand>, TenantDisableResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantEnableCommand>, TenantEnableResolver>();
+        serviceCollection.AddScoped<IEntityIdentifierResolver<TenantUpdateCommand>, TenantUpdateResolver>();
         serviceCollection.AddConfigurationEntryEntity();
         serviceCollection.AddProductEntity();
         serviceCollection.AddRoleEntity();
@@ -51,15 +54,18 @@ public static partial class ModuleBootstrapper
         serviceCollection.AddScoped<IProductDeleteInvoker, ProductDeleteLocalInvoker>();
         serviceCollection.AddScoped<IProductDisableInvoker, ProductDisableLocalInvoker>();
         serviceCollection.AddScoped<IProductEnableInvoker, ProductEnableLocalInvoker>();
+        serviceCollection.AddScoped<IProductUpdateInvoker, ProductUpdateLocalInvoker>();
         serviceCollection.AddScoped<IRoleCreateInvoker, RoleCreateLocalInvoker>();
         serviceCollection.AddScoped<IRoleDisableInvoker, RoleDisableLocalInvoker>();
         serviceCollection.AddScoped<IRoleEnableInvoker, RoleEnableLocalInvoker>();
+        serviceCollection.AddScoped<IRoleUpdateInvoker, RoleUpdateLocalInvoker>();
         serviceCollection.AddScoped<ITenantApiKeyIssueInvoker, TenantApiKeyIssueLocalInvoker>();
         serviceCollection.AddScoped<ITenantApiKeyRevokeInvoker, TenantApiKeyRevokeLocalInvoker>();
         serviceCollection.AddScoped<ITenantCreateInvoker, TenantCreateLocalInvoker>();
         serviceCollection.AddScoped<ITenantDeleteInvoker, TenantDeleteLocalInvoker>();
         serviceCollection.AddScoped<ITenantDisableInvoker, TenantDisableLocalInvoker>();
         serviceCollection.AddScoped<ITenantEnableInvoker, TenantEnableLocalInvoker>();
+        serviceCollection.AddScoped<ITenantUpdateInvoker, TenantUpdateLocalInvoker>();
         return serviceCollection;
     }
 }
