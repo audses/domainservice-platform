@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Workflowgroup.Platform.csproj" />
+  <Project Path="tests/Workflowgroup.Platform.Tests.csproj" />
+</Solution>
