@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-role-update")]
 public sealed record RoleUpdateCommand(Guid RoleId, string Name);
 /// <summary>Workflow implementing the 'role-update' process.</summary>
-[OrchestratorWorkflow("platform.role-update", Name = "RoleUpdate Workflow", Roles = new[] { "Administrator", "System" })]
+[OrchestratorWorkflow("platform.role-update", Name = "RoleUpdate Workflow", Roles = new[] { "administrator", "system" })]
 public partial class RoleUpdateWorkflow
 {
     /// <summary>Renames the specified role.</summary>

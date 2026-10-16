@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-tenant-update")]
 public sealed record TenantUpdateCommand(Guid TenantId, string Name);
 /// <summary>Workflow implementing the 'tenant-update' process.</summary>
-[OrchestratorWorkflow("platform.tenant-update", Name = "TenantUpdate Workflow", Roles = new[] { "Administrator", "System" })]
+[OrchestratorWorkflow("platform.tenant-update", Name = "TenantUpdate Workflow", Roles = new[] { "administrator", "system" })]
 public partial class TenantUpdateWorkflow
 {
     /// <summary>Renames the specified tenant.</summary>

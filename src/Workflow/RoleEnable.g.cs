@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-role-enable")]
 public sealed record RoleEnableCommand(Guid RoleId);
 /// <summary>Workflow implementing the 'role-enable' process.</summary>
-[OrchestratorWorkflow("platform.role-enable", Name = "RoleEnable Workflow", Roles = new[] { "Administrator", "System" })]
+[OrchestratorWorkflow("platform.role-enable", Name = "RoleEnable Workflow", Roles = new[] { "administrator", "system" })]
 public partial class RoleEnableWorkflow
 {
     /// <summary>Enables the specified role.</summary>

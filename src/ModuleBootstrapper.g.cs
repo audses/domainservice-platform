@@ -7,7 +7,6 @@
 
 using Appfoundation.Orchestrator.Abstraction;
 using Appfoundation.Orchestrator.Abstraction.Core;
-using Domaincontext.Platform.ConfigurationEntry;
 using Domaincontext.Platform.Product;
 using Domaincontext.Platform.Role;
 using Domaincontext.Platform.Tenant;
@@ -22,10 +21,8 @@ public static partial class ModuleBootstrapper
 {
     private static IServiceCollection AddPlatformWorkflowsGenerated(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddWorkflowCommandMappings().For<ConfigurationEntrySetWorkflow, ConfigurationEntrySetCommand>().For<ProductCreateWorkflow, ProductCreateCommand>().For<ProductDeleteWorkflow, ProductDeleteCommand>().For<ProductDisableWorkflow, ProductDisableCommand>().For<ProductEnableWorkflow, ProductEnableCommand>().For<ProductUpdateWorkflow, ProductUpdateCommand>().For<RoleCreateWorkflow, RoleCreateCommand>().For<RoleDisableWorkflow, RoleDisableCommand>().For<RoleEnableWorkflow, RoleEnableCommand>().For<RoleUpdateWorkflow, RoleUpdateCommand>().For<TenantApiKeyIssueWorkflow, TenantApiKeyIssueCommand>().For<TenantApiKeyRevokeWorkflow, TenantApiKeyRevokeCommand>().For<TenantCreateWorkflow, TenantCreateCommand>().For<TenantDeleteWorkflow, TenantDeleteCommand>().For<TenantDisableWorkflow, TenantDisableCommand>().For<TenantEnableWorkflow, TenantEnableCommand>().For<TenantUpdateWorkflow, TenantUpdateCommand>();
+        serviceCollection.AddWorkflowCommandMappings().For<ProductCreateWorkflow, ProductCreateCommand>().For<ProductDeleteWorkflow, ProductDeleteCommand>().For<ProductDisableWorkflow, ProductDisableCommand>().For<ProductEnableWorkflow, ProductEnableCommand>().For<ProductUpdateWorkflow, ProductUpdateCommand>().For<RoleCreateWorkflow, RoleCreateCommand>().For<RoleDisableWorkflow, RoleDisableCommand>().For<RoleEnableWorkflow, RoleEnableCommand>().For<RoleUpdateWorkflow, RoleUpdateCommand>().For<TenantApiKeyIssueWorkflow, TenantApiKeyIssueCommand>().For<TenantApiKeyRevokeWorkflow, TenantApiKeyRevokeCommand>().For<TenantCreateWorkflow, TenantCreateCommand>().For<TenantDeleteWorkflow, TenantDeleteCommand>().For<TenantDisableWorkflow, TenantDisableCommand>().For<TenantEnableWorkflow, TenantEnableCommand>().For<TenantUpdateWorkflow, TenantUpdateCommand>();
         serviceCollection.AddGeneratedWorkflows();
-        serviceCollection.AddScoped<IEntityIdentifierResolver<ConfigurationEntrySetCommand>, ConfigurationEntrySetResolverStep1>();
-        serviceCollection.AddScoped<IEntityIdentifierResolver<ConfigurationEntrySetCommand>, ConfigurationEntrySetResolverStep2>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductCreateCommand>, ProductCreateResolverStep1>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductCreateCommand>, ProductCreateResolverStep2>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<ProductDeleteCommand>, ProductDeleteResolver>();
@@ -45,11 +42,9 @@ public static partial class ModuleBootstrapper
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantDisableCommand>, TenantDisableResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantEnableCommand>, TenantEnableResolver>();
         serviceCollection.AddScoped<IEntityIdentifierResolver<TenantUpdateCommand>, TenantUpdateResolver>();
-        serviceCollection.AddConfigurationEntryEntity();
         serviceCollection.AddProductEntity();
         serviceCollection.AddRoleEntity();
         serviceCollection.AddTenantEntity();
-        serviceCollection.AddScoped<IConfigurationEntrySetInvoker, ConfigurationEntrySetLocalInvoker>();
         serviceCollection.AddScoped<IProductCreateInvoker, ProductCreateLocalInvoker>();
         serviceCollection.AddScoped<IProductDeleteInvoker, ProductDeleteLocalInvoker>();
         serviceCollection.AddScoped<IProductDisableInvoker, ProductDisableLocalInvoker>();

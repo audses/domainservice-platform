@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-product-update")]
 public sealed record ProductUpdateCommand(Guid ProductId, string Name);
 /// <summary>Workflow implementing the 'product-update' process.</summary>
-[OrchestratorWorkflow("platform.product-update", Name = "ProductUpdate Workflow", Roles = new[] { "Administrator", "System" })]
+[OrchestratorWorkflow("platform.product-update", Name = "ProductUpdate Workflow", Roles = new[] { "administrator", "system" })]
 public partial class ProductUpdateWorkflow
 {
     /// <summary>Renames the specified product.</summary>

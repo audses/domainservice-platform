@@ -10,8 +10,6 @@ namespace Workflowgroup.Platform;
 /// <summary>Unique-registry key constants for the 'platform' workflow group.</summary>
 public static class Constants
 {
-    /// <summary>Unique-registry key for 'configuration-entry-key'.</summary>
-    public const string ConfigurationEntryKeyUniqueKey = "configuration-entry-key";
     /// <summary>Unique-registry key for 'product-key'.</summary>
     public const string ProductKeyUniqueKey = "product-key";
     /// <summary>Unique-registry key for 'role-key'.</summary>

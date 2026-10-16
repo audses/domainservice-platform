@@ -19,7 +19,7 @@ namespace Workflowgroup.Platform.Workflow;
 [Command("platform-enable")]
 public sealed record TenantEnableCommand(Guid TenantId);
 /// <summary>Workflow implementing the 'tenant-enable' process.</summary>
-[OrchestratorWorkflow("platform.tenant-enable", Name = "TenantEnable Workflow", Roles = new[] { "Administrator", "System" })]
+[OrchestratorWorkflow("platform.tenant-enable", Name = "TenantEnable Workflow", Roles = new[] { "administrator", "system" })]
 public partial class TenantEnableWorkflow
 {
     /// <summary>Enables the specified tenant.</summary>
